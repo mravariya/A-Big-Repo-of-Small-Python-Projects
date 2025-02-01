@@ -1,31 +1,24 @@
-"""Bagels, by Al Sweigart al@inventwithpython.com
-A deductive logic game where you must guess a number based on clues.
-This code is available at https://nostarch.com/big-book-small-python-programming
-A version of this game is featured in the book, "Invent Your Own
-Computer Games with Python" https://nostarch.com/inventwithpython
-Tags: short, game, puzzle"""
-
 import random
 
-NUM_DIGITS = 3  # (!) Try setting this to 1 or 10.
-MAX_GUESSES = 10  # (!) Try setting this to 1 or 100.
+NUM_DIGITS = 3
+MAX_GUESSES = 10
 
+welcome_message = """Welcome to Bagels: A Deductive Logic Game
+
+Game Rules:
+- You will make guesses, and the game will provide feedback in the form of one of the following clues:
+  - "Bagels": No digits in your guess are correct.
+  - "Pico": One digit in your guess is correct but in the wrong position.
+  - "Fermi": One digit in your guess is correct and in the correct position.
+- The goal is to guess the secret number by using these clues and logic to eliminate incorrect guesses.
+
+Good luck, and may your deductive reasoning lead you to victory!"""
+
+print(welcome_message)
 
 def main():
-    print('''Bagels, a deductive logic game.
-By Al Sweigart al@inventwithpython.com
-
-I am thinking of a {}-digit number with no repeated digits.
-Try to guess what it is. Here are some clues:
-When I say:    That means:
-  Pico         One digit is correct but in the wrong position.
-  Fermi        One digit is correct and in the right position.
-  Bagels       No digit is correct.
-
-For example, if the secret number was 248 and your guess was 843, the
-clues would be Fermi Pico.'''.format(NUM_DIGITS))
-
-    while True:  # Main game loop.
+    
+    while True:
         # This stores the secret number the player needs to guess:
         secretNum = getSecretNum()
         print('I have thought up a number.')
@@ -44,7 +37,7 @@ clues would be Fermi Pico.'''.format(NUM_DIGITS))
             numGuesses += 1
 
             if guess == secretNum:
-                break  # They're correct, so break out of this loop.
+                break
             if numGuesses > MAX_GUESSES:
                 print('You ran out of guesses.')
                 print('The answer was {}.'.format(secretNum))
@@ -58,8 +51,8 @@ clues would be Fermi Pico.'''.format(NUM_DIGITS))
 
 def getSecretNum():
     """Returns a string made up of NUM_DIGITS unique random digits."""
-    numbers = list('0123456789')  # Create a list of digits 0 to 9.
-    random.shuffle(numbers)  # Shuffle them into random order.
+    numbers = list('0123456789')
+    random.shuffle(numbers)
 
     # Get the first NUM_DIGITS digits in the list for the secret number:
     secretNum = ''
@@ -84,7 +77,7 @@ def getClues(guess, secretNum):
             # A correct digit is in the incorrect place.
             clues.append('Pico')
     if len(clues) == 0:
-        return 'Bagels'  # There are no correct digits at all.
+        return 'Bagels'
     else:
         # Sort the clues into alphabetical order so their original order
         # doesn't give information away.
